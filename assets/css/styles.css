@@ -514,6 +514,21 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.12; font-weigh
 .bcard__more { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-display); font-weight: 600; font-size: 0.86rem; color: var(--accent); transition: gap 0.25s var(--ease); }
 .bcard:hover .bcard__more { gap: 11px; }
 
+/* Featured (full-width) blog card */
+.bcard--feature { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 40px; padding: 34px 38px; }
+.bcard--feature .bcard__main { flex: 1; min-width: 0; }
+.bcard--feature .bcard__title { font-size: 1.7rem; margin-bottom: 12px; }
+.bcard--feature .bcard__excerpt { font-size: 1.02rem; max-width: 62ch; }
+.bcard__flag { font-family: var(--font-mono); font-size: 0.72rem; padding: 5px 12px; border-radius: 999px; background: var(--grad); color: #fff; box-shadow: 0 6px 16px -6px var(--glow); }
+.bcard__aside { display: flex; flex-direction: column; align-items: flex-end; gap: 11px; text-align: right; padding-left: 38px; border-left: 1px solid var(--border); flex: none; }
+.bcard--feature .bcard__more { font-size: 0.92rem; }
+
+@media (max-width: 760px) {
+  .bcard--feature { flex-direction: column; align-items: stretch; gap: 20px; padding: 26px; }
+  .bcard--feature .bcard__title { font-size: 1.4rem; }
+  .bcard__aside { flex-direction: row; align-items: center; justify-content: space-between; text-align: left; padding-left: 0; padding-top: 18px; border-left: none; border-top: 1px solid var(--border); }
+}
+
 /* =========================================================
    ARTICLE PAGES (blog/*.html)
    ========================================================= */
