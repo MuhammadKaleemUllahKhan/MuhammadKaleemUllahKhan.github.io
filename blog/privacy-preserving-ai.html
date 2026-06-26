@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+
+  <title>Privacy-Preserving AI: Learning Without Looking | M. KaleemUllah Khan</title>
+  <meta name="description" content="Federated learning alone is not privacy. A tour of the real toolbox: differential privacy, secure aggregation, homomorphic encryption, and split learning, and how the pieces fit together." />
+  <meta name="author" content="Muhammad KaleemUllah Khan" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Privacy-Preserving AI: Learning Without Looking" />
+  <meta property="og:description" content="A tour of the real privacy toolbox and how differential privacy, secure aggregation, and split learning fit together." />
+  <meta property="og:url" content="https://muhammadkaleemullahkhan.github.io/blog/privacy-preserving-ai.html" />
+
+  <link rel="canonical" href="https://muhammadkaleemullahkhan.github.io/blog/privacy-preserving-ai.html" />
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Privacy-Preserving AI: Learning Without Looking",
+    "datePublished": "2026-02-15",
+    "author": { "@type": "Person", "name": "Muhammad KaleemUllah Khan", "url": "https://muhammadkaleemullahkhan.github.io/" },
+    "keywords": "Privacy-Preserving AI, Differential Privacy, Secure Aggregation, Split Learning, Federated Learning",
+    "mainEntityOfPage": "https://muhammadkaleemullahkhan.github.io/blog/privacy-preserving-ai.html"
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="../index.html" class="nav__brand" aria-label="Home">
+        <span class="nav__mark">MK</span>
+        <span class="nav__name">M. KaleemUllah Khan</span>
+      </a>
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#research">Research</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="../index.html#blog">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--ghost btn--sm" href="../index.html#blog">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg>
+          All posts
+        </a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" title="Toggle theme">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 7a5 5 0 100 10 5 5 0 000-10zm0-5a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 17a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zM4.22 5.64a1 1 0 011.42 0l1.41 1.41A1 1 0 115.64 8.46L4.22 7.05a1 1 0 010-1.41zm12.71 12.71a1 1 0 011.41 0l1.42 1.41a1 1 0 11-1.42 1.42l-1.41-1.42a1 1 0 010-1.41zM2 12a1 1 0 011-1h2a1 1 0 110 2H3a1 1 0 01-1-1zm17 0a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zM5.64 15.54a1 1 0 010 1.42l-1.42 1.41a1 1 0 11-1.41-1.42l1.41-1.41a1 1 0 011.42 0zM18.36 5.64a1 1 0 010 1.41l-1.41 1.41a1 1 0 11-1.42-1.41l1.42-1.41a1 1 0 011.41 0z"/></svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21.64 13a1 1 0 00-1.05-.14 8 8 0 01-3.37.73 8.15 8.15 0 01-8.14-8.1 8 8 0 01.74-3.36A1 1 0 008.86.1 10.14 10.14 0 1022 14.05a1 1 0 00-.36-1.05z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <div class="container">
+        <div class="article__hero">
+          <p class="article__crumb"><a href="../index.html#blog">Blog</a> / Privacy</p>
+          <span class="article__cat">Privacy</span>
+          <h1 class="article__title">Privacy-Preserving AI: Learning Without Looking</h1>
+          <div class="article__meta">
+            <span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M7 11h5v5H7zM4 4h16v2H4zm0 16V8h16v12z"/></svg> February 15, 2026</span>
+            <span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 11h-5v-2h3V6h2z"/></svg> 8 min read</span>
+            <span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 10-5-5 5 5 0 005 5zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5z"/></svg> Muhammad KaleemUllah Khan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="article__divider"></div>
+
+      <div class="container">
+        <div class="prose">
+          <p class="lead">
+            "We never see your data" is one of the most overused promises in tech, and one of the hardest to
+            actually keep. Privacy-preserving AI is the field that tries to make that promise true with
+            mathematics rather than marketing. It turns out you can learn a great deal from data you are
+            never allowed to look at directly, if you assemble the right tools.
+          </p>
+
+          <p>
+            In an <a href="federated-learning-without-sharing-data.html">earlier post</a> I argued that
+            federated learning is the <em>foundation</em> of privacy, not the whole building. This post is
+            about the rest of the building.
+          </p>
+
+          <h2>The leakage you did not expect</h2>
+          <p>
+            Start with the uncomfortable fact that motivates everything else: <strong>keeping raw data local
+            is not the same as keeping it private.</strong> In federated learning a client shares only model
+            updates, not data. Yet those updates are computed <em>from</em> the data, and they carry traces of
+            it.
+          </p>
+          <ul>
+            <li><strong>Gradient leakage.</strong> Under the right conditions an attacker who sees a client's
+            gradient update can partially reconstruct the very examples that produced it. The update is a kind
+            of lossy fingerprint of the data.</li>
+            <li><strong>Membership inference.</strong> Even without reconstructing anything, an attacker can
+            often tell whether a <em>particular</em> person's record was part of the training set, which can
+            itself be a serious privacy breach (imagine "was this patient in the cancer-study cohort?").</li>
+          </ul>
+          <p>
+            So the goal is not just "don't move the data." It is to ensure that what you <em>do</em> share
+            reveals as little as possible about any individual. That is where the real toolbox comes in.
+          </p>
+
+          <h2>The toolbox</h2>
+
+          <h3>Differential privacy</h3>
+          <p>
+            Differential privacy gives us a rigorous, mathematical definition of what privacy even means. The
+            intuition: the output of a computation should look essentially the same whether or not any single
+            individual's data was included. If no one person can measurably change the result, then the result
+            cannot reveal much about any one person.
+          </p>
+          <p>
+            In practice we achieve it by adding carefully calibrated <strong>noise</strong>, to gradients, to
+            updates, or to outputs. A parameter usually written as <code>epsilon</code> tunes the trade-off:
+            less noise means better accuracy but weaker privacy, more noise means stronger privacy at some
+            cost to accuracy. It is the rare privacy tool that comes with a provable guarantee instead of a
+            hopeful argument.
+          </p>
+
+          <h3>Secure aggregation</h3>
+          <p>
+            Recall that in federated learning a server combines many client updates. With <strong>secure
+            aggregation</strong>, the server can compute the <em>sum</em> of all the updates without being able
+            to read any single client's update on its own. Clients mask their contributions so that the masks
+            cancel out only when everything is added together. The server learns the aggregate, which is all it
+            needed, and nothing about the individuals. It is a beautiful fit for federated learning precisely
+            because aggregation was already the goal.
+          </p>
+
+          <h3>Homomorphic encryption</h3>
+          <p>
+            Homomorphic encryption lets you compute directly on <em>encrypted</em> data: add or multiply the
+            ciphertexts and, when you finally decrypt, you get the same answer as if you had operated on the
+            plaintext. In principle a server could process updates it can never actually read. It is
+            powerful and conceptually elegant, though still computationally heavy, so it tends to be applied
+            surgically rather than everywhere.
+          </p>
+
+          <h3>Split learning</h3>
+          <p>
+            Split learning takes a different angle: cut the neural network into two parts. The client runs the
+            first few layers on its raw data and sends only the intermediate representation, never the input
+            itself, to the server, which runs the rest. The data stays put, and only an already-abstracted
+            signal crosses the wire. It is especially attractive when clients are too small to hold or train a
+            whole model, and it pairs naturally with the other tools on this list.
+          </p>
+
+          <h2>No single tool is enough</h2>
+          <p>
+            The most important thing I have learned working in this area is that these techniques are
+            <strong>ingredients, not meals</strong>. Each closes some doors and leaves others open:
+          </p>
+          <blockquote>
+            <p>Federated learning keeps data local. Secure aggregation hides individual updates. Differential
+            privacy bounds what the result can reveal. Real privacy comes from layering them, not from
+            picking one.</p>
+          </blockquote>
+          <p>
+            A serious system might keep data on-device with federated learning, hide each update with secure
+            aggregation, and add differentially private noise so the final model leaks little about anyone,
+            all at once. The art is in combining them without the accuracy, communication, and compute costs
+            piling up to the point where the system is no longer practical.
+          </p>
+
+          <h2>Where privacy meets robustness and fairness</h2>
+          <p>
+            This is the part that pulls my whole research agenda together. Privacy does not live alone. The
+            same distributed system has to be <strong>robust</strong> to adversarial attacks, <strong>fair</strong>
+            across participants who contribute very different data, and <strong>efficient</strong> enough to run
+            on real devices. Worse, the goals can fight each other: differentially private noise can interact
+            badly with adversarial robustness; defenses against poisoning need to inspect updates that privacy
+            tools are trying to hide; protecting minority clients raises fairness questions that privacy can
+            obscure.
+          </p>
+          <p>
+            Holding privacy, security, and fairness together, rather than optimizing one and quietly sacrificing
+            the others, is exactly the knot my thesis on <em>fair and secure federated adversarial training</em>
+            tries to untie. It is hard precisely because the objectives are entangled, and that entanglement is
+            what makes it worth doing.
+          </p>
+
+          <h2>Learning without looking</h2>
+          <p>
+            Privacy-preserving AI is, in the end, an optimistic field. It refuses the false choice between
+            useful models and protected people. We may never reduce privacy to a single switch, but with the
+            right combination of tools we can build systems that genuinely learn from the world without
+            surveilling it, and that is a future worth engineering toward.
+          </p>
+        </div>
+
+        <div class="article__foot">
+          <div class="article__author">
+            <img src="../assets/img/profile.svg" alt="Muhammad KaleemUllah Khan" width="58" height="58" />
+            <div>
+              <strong>Muhammad KaleemUllah Khan</strong>
+              <span>PhD researcher at ÉTS Montréal, working on fair and secure federated adversarial training.</span>
+            </div>
+          </div>
+
+          <div class="morelinks">
+            <a class="morelink" href="federated-learning-without-sharing-data.html">
+              <span>Start here · Federated Learning</span>
+              <strong>Federated Learning: Training Together Without Sharing Data</strong>
+              <em>Read article
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5L12 20l8-8-8-8-1.5 1.5L16 11z"/></svg>
+              </em>
+            </a>
+            <a class="morelink" href="adversarial-examples-and-robust-models.html">
+              <span>Related · Adversarial ML</span>
+              <strong>Adversarial Examples and the Long Road to Robust Models</strong>
+              <em>Read article
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5L12 20l8-8-8-8-1.5 1.5L16 11z"/></svg>
+              </em>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="nav__mark">MK</span>
+        <div>
+          <strong>Muhammad KaleemUllah Khan</strong>
+          <span>PhD Researcher · Trustworthy &amp; Federated AI</span>
+        </div>
+      </div>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="../index.html#blog">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <p class="footer__copy">
+        © <span id="year">2026</span> Muhammad KaleemUllah Khan. Built with care in Montréal.
+      </p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 8l-6 6 1.4 1.4L12 10.8l4.6 4.6L18 14z"/></svg>
+  </button>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

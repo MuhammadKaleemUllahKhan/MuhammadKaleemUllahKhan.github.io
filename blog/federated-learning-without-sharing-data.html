@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+
+  <title>Federated Learning: Training Together Without Sharing Data | M. KaleemUllah Khan</title>
+  <meta name="description" content="A plain-language introduction to federated learning: how many devices train one shared model without exchanging raw data, the challenges of non-IID data and communication, and why the aggregator matters." />
+  <meta name="author" content="Muhammad KaleemUllah Khan" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Federated Learning: Training Together Without Sharing Data" />
+  <meta property="og:description" content="How thousands of devices can train one shared model without their raw data ever leaving home." />
+  <meta property="og:url" content="https://muhammadkaleemullahkhan.github.io/blog/federated-learning-without-sharing-data.html" />
+
+  <link rel="canonical" href="https://muhammadkaleemullahkhan.github.io/blog/federated-learning-without-sharing-data.html" />
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Federated Learning: Training Together Without Sharing Data",
+    "datePublished": "2026-05-12",
+    "author": { "@type": "Person", "name": "Muhammad KaleemUllah Khan", "url": "https://muhammadkaleemullahkhan.github.io/" },
+    "keywords": "Federated Learning, Distributed ML, Aggregator Selection, Privacy",
+    "mainEntityOfPage": "https://muhammadkaleemullahkhan.github.io/blog/federated-learning-without-sharing-data.html"
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="../index.html" class="nav__brand" aria-label="Home">
+        <span class="nav__mark">MK</span>
+        <span class="nav__name">M. KaleemUllah Khan</span>
+      </a>
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#research">Research</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="../index.html#blog">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--ghost btn--sm" href="../index.html#blog">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg>
+          All posts
+        </a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" title="Toggle theme">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 7a5 5 0 100 10 5 5 0 000-10zm0-5a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 17a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zM4.22 5.64a1 1 0 011.42 0l1.41 1.41A1 1 0 115.64 8.46L4.22 7.05a1 1 0 010-1.41zm12.71 12.71a1 1 0 011.41 0l1.42 1.41a1 1 0 11-1.42 1.42l-1.41-1.42a1 1 0 010-1.41zM2 12a1 1 0 011-1h2a1 1 0 110 2H3a1 1 0 01-1-1zm17 0a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zM5.64 15.54a1 1 0 010 1.42l-1.42 1.41a1 1 0 11-1.41-1.42l1.41-1.41a1 1 0 011.42 0zM18.36 5.64a1 1 0 010 1.41l-1.41 1.41a1 1 0 11-1.42-1.41l1.42-1.41a1 1 0 011.41 0z"/></svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21.64 13a1 1 0 00-1.05-.14 8 8 0 01-3.37.73 8.15 8.15 0 01-8.14-8.1 8 8 0 01.74-3.36A1 1 0 008.86.1 10.14 10.14 0 1022 14.05a1 1 0 00-.36-1.05z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="article">
+      <div class="container">
+        <div class="article__hero">
+          <p class="article__crumb"><a href="../index.html#blog">Blog</a> / Federated Learning</p>
+          <span class="article__cat">Federated Learning</span>
+          <h1 class="article__title">Federated Learning: Training Together Without Sharing Data</h1>
+          <div class="article__meta">
+            <span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M7 11h5v5H7zM4 4h16v2H4zm0 16V8h16v12z"/></svg> May 12, 2026</span>
+            <span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 11h-5v-2h3V6h2z"/></svg> 9 min read</span>
+            <span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 10-5-5 5 5 0 005 5zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5z"/></svg> Muhammad KaleemUllah Khan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="article__divider"></div>
+
+      <div class="container">
+        <div class="prose">
+          <p class="lead">
+            Most of the data we would love to learn from is also the data we are least allowed to touch:
+            the messages on your phone, the scans in a hospital, the logs inside a bank. Federated
+            learning is a deceptively simple answer to that tension. Bring the model to the data instead
+            of the data to the model.
+          </p>
+
+          <p>
+            For the last few years that single inversion has shaped almost everything I work on. It sounds
+            like a small engineering trick, but it changes the questions we ask: not just <em>how accurate
+            is the model</em>, but <strong>who holds the data, who can be trusted, and what leaks along the
+            way</strong>. Let me walk through how it actually works, and where it gets hard.
+          </p>
+
+          <h2>The core idea</h2>
+          <p>
+            In ordinary machine learning, you gather a big dataset in one place and train a model on it.
+            Federated learning keeps the data where it already lives, on phones, hospitals, sensors,
+            or banks, and ships a copy of the model to each of those places instead. Every participant,
+            usually called a <strong>client</strong>, trains the model a little on its own local data, then
+            sends back only the resulting <em>update</em> (the changes to the model's weights), never the
+            raw data itself. A central <strong>server</strong> collects those updates, combines them into a
+            single improved model, and sends it back out. Repeat.
+          </p>
+
+          <p>One round looks like this:</p>
+          <ol>
+            <li>The server sends the current global model to a selection of clients.</li>
+            <li>Each client trains for a few steps on its own private data.</li>
+            <li>Each client returns its model update (not its data) to the server.</li>
+            <li>The server <strong>aggregates</strong> the updates into a new global model.</li>
+          </ol>
+
+          <p>
+            The classic recipe for step four is <em>federated averaging</em>: take a weighted average of
+            the client updates, where each client's weight is proportional to how much data it trained on.
+            In pseudocode the heart of it is almost embarrassingly short:
+          </p>
+
+          <pre><code>global_weights = sum(n_k / n_total * client_weights_k
+                    for k in selected_clients)</code></pre>
+
+          <p>
+            That average is the entire magic and, as we will see, the entire problem.
+          </p>
+
+          <h2>Why it is harder than it sounds</h2>
+          <p>
+            If every client held a random slice of the same clean dataset, federated averaging would be
+            close to free. Real deployments are nothing like that.
+          </p>
+
+          <h3>The data is not identically distributed</h3>
+          <p>
+            Your phone's photos look nothing like mine. One hospital sees mostly one demographic; another
+            sees a different one. In the jargon this is <strong>non-IID data</strong>, and it means each
+            client's local update pulls the model in a slightly different direction. Average enough
+            conflicting directions together and the global model can drift, oscillate, or simply learn more
+            slowly. A lot of federated-learning research is, at heart, about taming this disagreement.
+          </p>
+
+          <h3>Communication is the bottleneck</h3>
+          <p>
+            Sending model updates back and forth, sometimes millions of parameters, over consumer networks
+            is slow and expensive. Unlike a data center where machines sit next to each other, federated
+            clients are scattered across the real world on flaky connections. So we care intensely about
+            doing <strong>more learning per byte communicated</strong>: compressing updates, training longer
+            locally between rounds, and choosing carefully who participates.
+          </p>
+
+          <h3>Some clients are slow, or simply leave</h3>
+          <p>
+            Phones drop off Wi-Fi. Devices run out of battery. A client that was supposed to report back
+            never does. These <em>stragglers</em> mean the server often has to move on with whatever
+            subset of updates arrived in time, which again skews the average.
+          </p>
+
+          <h3>Not everyone is honest</h3>
+          <p>
+            Because the server only sees updates, a malicious client can send a poisoned one designed to
+            corrupt the global model or implant a backdoor. Federated learning therefore inherits a whole
+            security problem on top of its statistical one, which is exactly the seam where my own work
+            lives.
+          </p>
+
+          <h2>The aggregator is the quiet decision-maker</h2>
+          <p>
+            Step four, aggregation, is where I have spent most of my attention. Plain averaging treats
+            every update as equally trustworthy and equally relevant. That is rarely true. A more thoughtful
+            aggregator can weigh updates by how reliable a client has been, how representative its data is,
+            or how much it actually moves the global model in a useful direction.
+          </p>
+
+          <blockquote>
+            <p>Two federated systems can run the same model, the same data, and the same number of rounds,
+            and still end up worlds apart, purely because of how they decide to combine updates.</p>
+          </blockquote>
+
+          <p>
+            In my research I have explored <strong>adaptive aggregator selection</strong>: rather than fixing
+            one averaging rule forever, the system chooses, round by round, which client should act as the
+            aggregation point and how updates should be merged, guided by an <em>enhanced global model</em>
+            that keeps a sharper picture of overall progress. The payoff is a model that converges faster and
+            resists the pull of noisy or adversarial clients, which matters a great deal for things like
+            network-intrusion detection where the threats keep shifting.
+          </p>
+
+          <h2>Cutting out the middle</h2>
+          <p>
+            Everything above still assumes one central server. But that server is a single point of failure,
+            a bottleneck, and a tempting target. <strong>Decentralized federated learning</strong> removes it:
+            clients exchange and merge updates with one another, often over a peer-to-peer topology, with no
+            central coordinator. Aggregator selection becomes even more interesting here, because the role of
+            "who combines the updates" can rotate through the network rather than being hard-wired to one
+            machine. The result is a system with no obvious head to attack and no single party that has to be
+            trusted by everyone.
+          </p>
+
+          <h2>So is the data actually private?</h2>
+          <p>
+            This is the honest caveat. Keeping raw data on the device is a strong start, but updates can still
+            leak information about the data that produced them. Federated learning is best understood as the
+            <em>foundation</em> of a privacy-preserving system, not the whole of it. To genuinely protect
+            participants you layer on extra defenses, secure aggregation, differential privacy, and more,
+            which is a story for another post.
+          </p>
+
+          <h2>Why I find it worth the trouble</h2>
+          <p>
+            Federated learning lets us learn from data that, for perfectly good reasons, can never be pooled.
+            That unlocks medicine, security, and personalization that would otherwise be off-limits. The price
+            is a tangle of statistical, systems, and security challenges that all interact, and that tangle is
+            precisely what makes it such a rich place to do research. Get the aggregation right, defend it
+            against the dishonest few, and do it all without burning through a phone's battery, and you have a
+            system that is not just clever but genuinely deployable.
+          </p>
+        </div>
+
+        <div class="article__foot">
+          <div class="article__author">
+            <img src="../assets/img/profile.svg" alt="Muhammad KaleemUllah Khan" width="58" height="58" />
+            <div>
+              <strong>Muhammad KaleemUllah Khan</strong>
+              <span>PhD researcher at ÉTS Montréal, working on fair and secure federated adversarial training.</span>
+            </div>
+          </div>
+
+          <div class="morelinks">
+            <a class="morelink" href="adversarial-examples-and-robust-models.html">
+              <span>Next up · Adversarial ML</span>
+              <strong>Adversarial Examples and the Long Road to Robust Models</strong>
+              <em>Read article
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5L12 20l8-8-8-8-1.5 1.5L16 11z"/></svg>
+              </em>
+            </a>
+            <a class="morelink" href="privacy-preserving-ai.html">
+              <span>Related · Privacy</span>
+              <strong>Privacy-Preserving AI: Learning Without Looking</strong>
+              <em>Read article
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5L12 20l8-8-8-8-1.5 1.5L16 11z"/></svg>
+              </em>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="nav__mark">MK</span>
+        <div>
+          <strong>Muhammad KaleemUllah Khan</strong>
+          <span>PhD Researcher · Trustworthy &amp; Federated AI</span>
+        </div>
+      </div>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="../index.html#blog">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <p class="footer__copy">
+        © <span id="year">2026</span> Muhammad KaleemUllah Khan. Built with care in Montréal.
+      </p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 8l-6 6 1.4 1.4L12 10.8l4.6 4.6L18 14z"/></svg>
+  </button>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>
