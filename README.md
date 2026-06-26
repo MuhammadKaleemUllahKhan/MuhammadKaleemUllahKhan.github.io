@@ -1,7 +1,7 @@
-# Muhammad KaleemUllah Khan — Academic Website
+# Academic Website of Muhammad KaleemUllah Khan
 
 Personal academic website of **Muhammad KaleemUllah Khan**, PhD researcher in Computer Science
-at École de technologie supérieure (ÉTS), Montréal — working on *fair and secure federated
+at École de technologie supérieure (ÉTS), Montréal, working on *fair and secure federated
 adversarial training*, privacy-preserving AI, and energy-aware machine learning.
 
 🔗 **Live site:** https://muhammadkaleemullahkhan.github.io/
@@ -17,7 +17,7 @@ adversarial training*, privacy-preserving AI, and energy-aware machine learning.
 - Education & experience timelines
 - Research-interest, project, and skills showcases
 - Downloadable CV, accessible markup, and SEO + structured data (JSON-LD)
-- **No build step** — pure HTML/CSS/JS, served directly by GitHub Pages
+- **No build step**: pure HTML/CSS/JS, served directly by GitHub Pages
 
 ## 📁 Structure
 
@@ -31,7 +31,7 @@ adversarial training*, privacy-preserving AI, and energy-aware machine learning.
     ├── css/styles.css
     ├── js/main.js
     └── img/
-        ├── profile.svg        # Placeholder avatar — replace with a real photo
+        ├── profile.svg        # Placeholder avatar, replace with a real photo
         └── favicon.svg
 ```
 
@@ -39,13 +39,13 @@ adversarial training*, privacy-preserving AI, and energy-aware machine learning.
 
 A few things you may want to personalize (all in `index.html` unless noted):
 
-1. **Profile photo** — replace `assets/img/profile.svg` with a real photo
+1. **Profile photo**: replace `assets/img/profile.svg` with a real photo
    (e.g. `profile.jpg`) and update the `<img src="...">` in the hero card.
-2. **Social links** — the Google Scholar, LinkedIn, and ORCID icons currently
-   point to placeholder homepages. Search for `update link` in `index.html`
-   and swap in your real profile URLs.
-3. **Email** — the site uses `ranakaleem109@gmail.com` (from your CV). Update if needed.
-4. **Content** — publications, experience, and projects are plain HTML blocks; edit text directly.
+2. **Social links**: GitHub, Google Scholar, LinkedIn, and ORCID are already
+   wired up to real profiles in the hero and Contact sections. Update them in
+   `index.html` if any change.
+3. **Email**: the site uses `ranakaleem109@gmail.com` (from your CV). Update if needed.
+4. **Content**: publications, experience, and projects are plain HTML blocks; edit text directly.
 
 ## 🚀 Deploying on GitHub Pages
 

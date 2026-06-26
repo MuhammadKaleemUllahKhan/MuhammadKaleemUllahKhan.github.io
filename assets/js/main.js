@@ -1,5 +1,5 @@
 /* =========================================================
-   Muhammad KaleemUllah Khan — site interactions
+   Muhammad KaleemUllah Khan : site interactions
    ========================================================= */
 (function () {
   "use strict";
