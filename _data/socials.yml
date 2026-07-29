@@ -1,0 +1,9 @@
+# Social media links and usernames. Displayed in the order defined here.
+# See the jekyll-socials plugin: https://github.com/george-gca/jekyll-socials
+cv_pdf: /assets/pdf/Muhammad_KaleemUllah_Khan_CV.pdf # path to your CV PDF file
+email: ranakaleem109@gmail.com
+github_username: MuhammadKaleemUllahKhan
+linkedin_username: kalemullah
+orcid_id: 0009-0004-5953-1532
+scholar_userid: TwyJ4u4AAAAJ
+rss_icon: true # comment this line to hide the RSS icon

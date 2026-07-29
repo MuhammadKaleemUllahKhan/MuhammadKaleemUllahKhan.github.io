@@ -1,0 +1,104 @@
+/*******************************************************************************
+ * Local overrides
+ *  - Ontario Tech University colour palette
+ *      Future Blue   #003c71
+ *      Simcoe Blue   #0077ca
+ *      Tech Tangerine#e75d2a
+ *  - A few tasteful, reduced-motion-aware animations
+ ******************************************************************************/
+
+/* ---- Colour tokens (light) ---- */
+:root {
+  --global-theme-color: #0077ca; /* Simcoe Blue */
+  --global-hover-color: #003c71; /* Future Blue */
+  --global-highlight-color: #e75d2a; /* Tech Tangerine */
+}
+
+/* ---- Colour tokens (dark) ---- */
+html[data-theme="dark"] {
+  --global-theme-color: #4aa8ec; /* brighter Simcoe for dark bg */
+  --global-hover-color: #7cc3f2;
+  --global-highlight-color: #ff7a4d;
+}
+
+/* ---- Subtle interaction polish (always on, cheap) ---- */
+.card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+}
+
+a.page-link,
+.social a i.fa-solid,
+.social a i.fab,
+.social a i.ai {
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+.social a:hover i {
+  transform: translateY(-2px);
+}
+
+/* Publication list rows lift gently on hover */
+.publications ol.bibliography li {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+}
+.publications ol.bibliography li:hover {
+  transform: translateX(4px);
+}
+
+/* ---- Entrance animations (only when the visitor is fine with motion) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes alFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes alFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .profile,
+  #about-me,
+  .post-title,
+  .post .post-content > h1:first-child,
+  article.post > .post-header {
+    animation: alFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Home page building blocks, gently staggered */
+  .profile {
+    animation-delay: 0.05s;
+  }
+  #news {
+    animation: alFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  }
+  .publications {
+    animation: alFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+  }
+
+  /* Cards and rows ease in */
+  .projects .grid-item,
+  .card {
+    animation: alFadeIn 0.7s ease both;
+  }
+}
