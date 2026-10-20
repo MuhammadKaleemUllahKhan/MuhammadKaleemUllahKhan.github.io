@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://muhammadkaleemullahkhan.github.io/sitemap.xml
