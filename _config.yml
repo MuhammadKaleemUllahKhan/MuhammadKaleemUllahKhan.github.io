@@ -9,7 +9,7 @@ last_name: Khan
 contact_note: >
   The best way to reach me is by email.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Muhammad KaleemUllah Khan is a PhD researcher at École de technologie supérieure (ÉTS), Montréal, working on fair and secure federated adversarial training, privacy-preserving AI, and energy-aware machine learning.
+  Muhammad KaleemUllah Khan is a postdoctoral researcher at the Faculty of Business and Information Technology, Ontario Tech University, working on trustworthy and distributed AI: federated learning, adversarial robustness, privacy-preserving AI, and energy-aware machine learning.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.

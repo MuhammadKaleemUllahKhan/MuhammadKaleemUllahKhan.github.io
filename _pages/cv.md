@@ -15,7 +15,7 @@ description: Curriculum vitae. A full PDF is available for download below.
 
 ## Education
 
-- **Ph.D. in Computer Science** — École de technologie supérieure (ÉTS), Montréal · *2022 – Present*
+- **Ph.D. in Computer Science** — École de technologie supérieure (ÉTS), Montréal · *2022 – 2026*
   <br>Thesis: *Fair and Secure Federated Adversarial Training* · Advisor: Prof. Kaiwen Zhang
 - **M.S. in Computer Science** — COMSATS University Islamabad · *2021*
   <br>Thesis: *Efficient Pest &amp; Disease Identification using Deep Learning* · Advisor: Prof. Dr. Sohail Asghar
@@ -24,6 +24,8 @@ description: Curriculum vitae. A full PDF is available for download below.
 
 ## Experience
 
+- **Postdoctoral Researcher** — Faculty of Business and Information Technology, Ontario Tech University · Oshawa, ON · *2026 – Present*
+  <br>Research on trustworthy and distributed AI: federated learning, adversarial robustness, privacy, and energy-aware machine learning.
 - **Research Assistant** — Algoma University, Brampton · *Aug 2025 – Dec 2025*
   <br>Research and development on improving energy efficiency in machine-learning systems.
 - **Lecturer, Computer Science** — Punjab College, Jhang · *Jun 2021 – Nov 2021*
